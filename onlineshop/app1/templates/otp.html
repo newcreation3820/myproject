@@ -1,0 +1,49 @@
+{% extends 'header.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Enter OTP</title>
+	<!-- CSS only -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+	<!-- JS, Popper.js, and jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body>
+	{% block content %}
+	<center>
+	<h1>Verify OTP</h1>
+	</center>
+	<div style="width: 30%; border: 2px solid gray; border-radius: 10px; margin-left: 500px; padding: 20px; font-weight: 500;">
+	<form method="POST" action="{% url 'verify_otp' %}">
+      {% csrf_token %}
+  		<div class="form-group" style="color: red; font-weight: 10px">
+        {% if msg %}
+          {{msg}}
+        {% endif %}
+        <br>
+    	</div>
+  		<div class="form-group">
+        {% if myvar %}
+          <input type="hidden" name="myvar" value="{{myvar}}">
+        {% endif %}
+    		<input type="hidden" name="otp" value="{{otp}}">
+    		<input type="hidden" name="email" value="{{e}}">
+  		</div>
+  		<div class="form-group">
+    		<label>Enter OTP</label>
+    		<input type="text" class="form-control" placeholder="Enter OTP" name="u_otp" required="required">
+  			<button type="submit" class="btn btn-primary" style="margin-top:20px; ">Verify</button>
+	</form>
+	</div>
+  <script language=JavaScript>
+var message = "function disabled";
+function rtclickcheck(keyp){ if (navigator.appName == "Netscape" && keyp.which == 3){ alert(message); return false; }
+if (navigator.appVersion.indexOf("MSIE") != -1 && event.button == 2) { alert(message); return false; } }
+document.onmousedown = rtclickcheck;
+</script>
+	{% endblock content %}
+</body>
+</html>

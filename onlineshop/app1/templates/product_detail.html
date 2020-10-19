@@ -1,0 +1,89 @@
+{% extends data|yesno:"header.html,seller_header.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>View Product</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+	<!-- JS, Popper.js, and jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body>
+	{% block content %}
+	<div class="row">
+		<div id="box" class="col-sm-3">
+			<div class="container">
+		  		<div class="card" style="width:470px;  padding: 10px; border:1px solid gray; border-radius: 10px;">
+		    		<img class="card-img-top" src="{{product.product_photo.url}}" alt="Card image" style=" height:450px; width:450px; border:1px solid #0a7bd1; padding: 10px; border-radius: 5px;">
+		    			<div class="card-body">
+		      				<h4 class="card-title">{{product.product_name}}</h4>
+		      				<p class="card-text">{{product.product_price}}</p>
+		      				<p class="card-text">{{product.product_desc}}</p>
+
+
+		      				{% if request.session.usertype == 'seller' %}
+		      					{% if product.product_stock == 'unavailable' %}
+		      						<a class="btn btn-primary" href="{% url 'product_stock' pk=product.pk %}">Make It Available</a>
+			      				{% else %}
+			      					<a class="btn btn-primary" href="{% url 'product_stock' pk=product.pk %}">Make It Unavailable</a>
+			      				{% endif %}
+			      				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			      					<a class="btn btn-primary" href="{% url 'edit_product' pk=product.pk %}">Edit</a>
+
+			      			{% elif request.session.usertype == 'user' %}
+			      				<a href="{% url 'add_to_cart' pk=product.pk %}">
+			      					<svg width="2em" height="3em" viewBox="0 0 16 16" class="bi bi-cart-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  									<path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+									</svg>
+								</a>
+			      				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			      				
+			      				{% if flag == False %}
+
+			      				{% else %}
+			      					<a href="{% url 'add_to_wishlist' pk=product.pk %}">
+					      			<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		  							<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+									</svg>
+								</a>
+			      				{% endif %}
+			      				<br>
+			      				<a class="btn btn-primary" href="{% url 'review' pk=product.pk %}">Give Your Review</a>
+										
+		      					
+			      				
+			      			{% else %}
+			      				<a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+			      			{% endif %}
+		    			</div>
+		  		</div>	  
+			</div>
+		</div>
+	</div>
+	<hr>
+<h2 style="padding:50px; ">Customer Also Buy</h2>
+
+	<div class="row">
+		 {% for s in products %}
+		<div id="box" class="col-sm-3">
+			<div class="container">
+		  		<div class="card" style="width:250px;padding: 10px; border:1px solid gray; border-radius: 10px;">
+		    		<img class="card-img-top" src="{{s.product_photo.url}}" alt="Card image" width=250px height=250px style="border:0.5px solid gray; border-radius: 10px;" >
+		    			<div class="card-body">
+		      				<h4 class="card-title">{{s.product_name}}</h4>
+		      				<p class="card-text">{{s.product_price}}</p>
+		      				<p class="card-text">{{s.product_stock}}</p>
+		      				<a href="{% url 'product_detal' pk=s.pk %}" class="btn btn-primary">More Detail</a>
+		      				
+		    			</div>
+		  		</div>	  
+			</div>
+		</div> 
+	    {% endfor %}
+	</div>
+
+	{% endblock content %}
+</body>
+</html>

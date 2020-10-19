@@ -1,0 +1,41 @@
+{% extends 'seller_header.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>View Product</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+	<!-- JS, Popper.js, and jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body>
+	{% block content %}
+	
+		{% if msg %}
+              {{msg}}
+          {% endif %}
+	<div class="row">
+		 {% for s in products %}
+		<div id="box" class="col-sm-3">
+			<div class="container">
+		  		<div class="card" style="width:250px;padding: 10px; border:1px solid gray; border-radius: 10px;">
+		    		<img class="card-img-top" src="{{s.product_photo.url}}" alt="Card image" width=250px height=250px style="border:0.5px solid gray; border-radius: 10px;" >
+		    			<div class="card-body">
+		      				<h4 class="card-title">{{s.product_name}}</h4>
+		      				<p class="card-text">{{s.product_price}}</p>
+		      				<p class="card-text stoke-cstm" style="color:green; font-weight: 700;">{{s.product_stock}}</p>
+		      				<a class="btn btn-primary" href="{% url 'product_detal' pk=s.pk %}">More Detail</a>
+		      				<a class="btn btn-primary" href="{% url 'delete_product' pk=s.pk %}">Delete</a>
+		    			</div>
+		  		</div>	  
+			</div>
+		</div> 
+	    {% endfor %}
+	</div>
+	
+
+	{% endblock content %}
+</body>
+</html>

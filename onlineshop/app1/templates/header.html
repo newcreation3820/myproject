@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <!-- CSS only -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <SCRIPT type="text/javascript">
+        window.history.forward();
+        function noBack() { window.history.forward(); }
+    </SCRIPT>
+
+    <style type="text/css">
+      /*header search bar */
+         .Search-bar{
+          margin-left:10px;
+          padding: 2px;
+          border:2px solid #0275bb;
+          border-radius: 5px;
+         }
+     /*header search button */
+         .Search-bar-btn{
+          color: black;
+          padding: 2px;
+          background-color: white;
+          border:2px solid #0275bb;
+          border-radius: 5px;
+         }
+         .Search-bar-btn:hover{
+          background-color: #0275bb;
+          color:white;
+         }
+    /*dropdown for catagory*/
+        .catagory{
+          margin-left: :100px;
+        }
+    /*Footer*/
+    .footer{
+      margin-top: 100px;
+      border:4px solid #0763b3;
+      border-bottom-right-radius: 40px;
+      border-bottom-left-radius: 40px;
+    }
+    .header{
+      border-top:4px solid #0763b3;
+      border-top-right-radius: 40px;
+      border-top-left-radius: 40px;
+    </style>
+
+</head>
+<body onload="noBack();" 
+    onpageshow="if (event.persisted) noBack();" onunload="">
+<!-- Navbar -->
+<div class="header">
+
+  <nav class="navbar navbar-expand-md navbar-light">
+  <a class="navbar-brand" href="/">
+    <b><h2 style="color: #13398a; font-weight: 1000;" >ONLINE SHOP</h2></b>
+  </a>
+  <!-- Breadcrumbs -->
+  <!-- Links -->
+  <div class="collapse navbar-collapse" id="basicExampleNav11">
+
+    <!-- Right -->
+    <div class="dropdown">
+      <a class="btn btn-primary dropdown-toggle catagory" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Category
+      </a>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" href="{% url 'men' %}">Men</a>
+        <a class="dropdown-item" href="#">Women</a>
+        <a class="dropdown-item" href="#">Kids</a>
+      </div>
+    </div>
+   <form action="">
+      <input class="Search-bar" type="text" placeholder="Search">
+      <button class="Search-bar-btn" type="submit">Search</button>
+      <a href="{% url 'contact' %}" class="nav-link waves-effect btn btn-primary" style="height: 33px; padding: 3px; color: white; float: right; margin-left: 10px;">
+          Contact
+        </a>      
+    </form>
+    <ul class="navbar-nav ml-auto">
+       
+      {% if request.session.fname %}
+
+      <img src="{{request.session.imageurl}}" style=" height:40px; width:40px; border:1px solid #0a7bd1; padding: 1px; border-radius: 5px;" >
+      <li class="nav-item pl-2 mb-2 mb-md-0">
+          <a href="#" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light"> WelCome {{request.session.fname}}</a>
+      </li>
+      
+      <li class="nav-item pl-2 mb-2 mb-md-0">
+          <a href="{% url 'logout' %}" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Logout</a>
+      </li>
+      <li class="nav-item pl-2 mb-2 mb-md-0">
+          <a href="{% url 'change_password' %}" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Change Password</a>
+      </li>
+      {% if request.session.total_wishlist == 0 %}
+        <li class="nav-item pl-2 mb-2 mb-md-0">
+            <a href="{% url 'mywishlist' %}" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                </svg>
+            </a>
+        </li>
+      {% else %}
+        <li class="nav-item pl-2 mb-2 mb-md-0">
+          <a href="{% url 'mywishlist' %}" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641   2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+              </svg>
+              ({{request.session.total_wishlist}})</a>
+        </li>
+      {% endif %}
+      
+      {% if request.session.total_cart == 0 %}
+        <li class="nav-item pl-2 mb-2 mb-md-0">
+            <a href="{% url 'mycart' %}" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                 <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                </svg>
+            </a>
+        </li>
+      {% else %}
+        <li class="nav-item pl-2 mb-2 mb-md-0">
+          <a href="{% url 'mycart' %}" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+              </svg>
+          ({{request.session.total_cart}})</a>
+        </li>
+      {% endif %}
+      {% else %}
+      <li class="nav-item pl-2 mb-2 mb-md-0">
+            <a href="{% url 'login' %}" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Login
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10zm4.854-7.85a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                </svg>
+            </a>
+          </li>
+      <li class="nav-item pl-2 mb-2 mb-md-0">
+            <a href="{% url 'singup' %}" type="button" class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Sign up
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10zM13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                </svg>
+            </a>
+      {% endif %}
+      </li>
+    </ul>
+      
+   
+  </div>
+  <!-- Links -->
+
+</nav>
+<!-- Navbar -->
+<hr>
+</div>
+{% block content %}
+{% endblock content %}
+<div class="footer">
+  <!-- Footer -->
+<footer class="page-footer font-small blue-grey lighten-5">
+
+  <div style="background-color: #0763b3;">
+    <div class="container">
+
+      <!-- Grid row-->
+      <div class="row py-4 d-flex align-items-center">
+
+        <!-- Grid column -->
+        <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0 text-light">
+          <h6 class="mb-0">Get connected with us on social networks!</h6>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+          <!-- Facebook -->
+          <a class="fb-ic">
+            <i class="fab fa-facebook-f white-text mr-4"> </i>
+          </a>
+          <!-- Twitter -->
+          <a class="tw-ic">
+            <i class="fab fa-twitter white-text mr-4"> </i>
+          </a>
+          <!-- Google +-->
+          <a class="gplus-ic">
+            <i class="fab fa-google-plus-g white-text mr-4"> </i>
+          </a>
+          <!--Linkedin -->
+          <a class="li-ic">
+            <i class="fab fa-linkedin-in white-text mr-4"> </i>
+          </a>
+          <!--Instagram-->
+          <a class="ins-ic">
+            <i class="fab fa-instagram white-text"> </i>
+          </a>
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row-->
+
+    </div>
+  </div>
+
+  <!-- Footer Links -->
+  <div class="container text-center text-md-left mt-5">
+
+    <!-- Grid row -->
+    <div class="row mt-3 dark-grey-text">
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+
+        <!-- Content -->
+        <h6 class="text-uppercase font-weight-bold">OnlineShop</h6>
+        <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>Everyday living. Be unique, be brave, be divine. Quality never goes out of style. Explore your true style. ....</p>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+
+        <!-- Links -->
+        <h6 class="text-uppercase font-weight-bold">Products</h6>
+        <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>
+          <a class="dark-grey-text" href="#!">Mens</a>
+        </p>
+        <p>
+          <a class="dark-grey-text" href="#!">Women</a>
+        </p>
+        <p>
+          <a class="dark-grey-text" href="#!">Kids</a>
+        </p>
+       
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+
+        <!-- Links -->
+        <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+        <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>
+          <a class="dark-grey-text" href="#!">Your Account</a>
+        </p>
+        <p>
+          <a class="dark-grey-text" href="#!">Wish List</a>
+        </p>
+        <p>
+          <a class="dark-grey-text" href="#!">Shipping Rates</a>
+        </p>
+        <p>
+          <a class="dark-grey-text" href="#!">Help</a>
+        </p>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+        <!-- Links -->
+        <h6 class="text-uppercase font-weight-bold">Contact</h6>
+        <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>
+          <i class="fas fa-home mr-3"></i> Surat , Gujrat , India </p>
+        <p>
+          <i class="fas fa-envelope mr-3"></i> info@Onlineshop.com</p>
+        <p>
+          <i class="fas fa-phone mr-3"></i> +91 7202848201</p>
+        <p>
+          <i class="fas fa-print mr-3"></i> +91 9656856969</p>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center text-black-50 py-3">© 2020 Copyright:
+    <a class="dark-grey-text" href="https://mdbootstrap.com/">Onlineshop.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+{% block javascript %}{% endblock %}
+</body>
+</html>
